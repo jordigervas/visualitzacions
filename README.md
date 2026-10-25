@@ -1,0 +1,2 @@
+# visualitzacions
+Visualitzacions de dades
