@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Sankey Diagram amb Plotly.js</title>
+  <!-- Carrega la llibreria Plotly.js -->
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+
+<h2>Sankey Diagram (Flux d'Ingressos a Despeses)</h2>
+<div id="sankeyChart" style="width:100%; max-width:700px; height:400px;"></div>
+
+<script>
+// 1. Definició de les dades de flux
+const data = [{
+  type: "sankey",
+  orientation: "h",
+  node: {
+    pad: 15,
+    thickness: 20,
+    line: { color: "black", width: 0.5 },
+    label: ["Salari", "Inversions", "Pressupost", "Habitatge", "Alimentació", "Estalvi"],
+    color: ["#3182bd", "#6baed6", "#9ecae1", "#e6550d", "#fdae6b", "#74c476"]
+  },
+  link: {
+    source: [0, 1, 2, 2, 2], // Índexs dels nodes d'origen
+    target: [2, 2, 3, 4, 5], // Índexs dels nodes de destí
+    value:  [3000, 500, 1200, 800, 1500] // Magnitud del flux
+  }
+}];
+
+// 2. Disseny i opcions visuals
+const layout = {
+  font: { size: 12, family: "sans-serif" },
+  margin: { l: 20, r: 20, t: 20, b: 20 }
+};
+
+// 3. Renderitzar el gràfic
+Plotly.newPlot('sankeyChart', data, layout);
+</script>
+</body>
+</html>

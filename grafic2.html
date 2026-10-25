@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Waterfall Chart amb Plotly.js</title>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+
+<h2>Waterfall Chart (Estat Financer)</h2>
+<div id="waterfallChart" style="width:100%; max-width:700px; height:400px;"></div>
+
+<script>
+// 1. Definició de dades financeres
+const data = [{
+  type: "waterfall",
+  orientation: "v",
+  measure: ["relative", "relative", "relative", "relative", "relative", "total"],
+  x: ["Ingressos", "Vendes ext.", "Costos mat.", "Nòmines", "Impostos", "Benefici Net"],
+  y: [4200, 1200, -1800, -1500, -600, 0], // En el total el valor s'autocalcula
+  text: ["+4200", "+1200", "-1800", "-1500", "-600", "Total"],
+  textposition: "outside",
+  connector: {
+    line: { color: "#7f8c8d", width: 1.5, dash: "dot" }
+  },
+  increasing: { marker: { color: "#2ecc71" } },
+  decreasing: { marker: { color: "#e74c3c" } },
+  totals:     { marker: { color: "#3498db" } }
+}];
+
+// 2. Layout del gràfic
+const layout = {
+  yaxis: { title: "Euros (€)" },
+  margin: { l: 60, r: 30, t: 30, b: 50 },
+  autosize: true
+};
+
+// 3. Renderitzar el gràfic
+Plotly.newPlot('waterfallChart', data, layout);
+</script>
+</body>
+</html>

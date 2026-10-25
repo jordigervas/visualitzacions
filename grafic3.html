@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <title>Raincloud Plot amb Plotly.js</title>
+  <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+</head>
+<body>
+
+<h2>Raincloud Plot (Distribució de Temps de Resposta)</h2>
+<div id="raincloudChart" style="width:100%; max-width:700px; height:450px;"></div>
+
+<script>
+// 1. Generar dades simulades (distribució contínua)
+function randomNormal(mean, std) {
+  let u = 0, v = 0;
+  while(u === 0) u = Math.random();
+  while(v === 0) v = Math.random();
+  return mean + std * Math.sqrt(-2.0 * Math.log(u)) * Math.cos(2.0 * Math.PI * v);
+}
+
+const values = Array.from({length: 80}, () => randomNormal(50, 10));
+
+// 2. Configuració del traçat Violin per fer un Raincloud
+const data = [{
+  type: 'violin',
+  y: values,
+  name: 'Grup de prova',
+  
+  // A. El Núvol (Densitat de mitja cara)
+  side: 'positive',
+  fillcolor: 'rgba(155, 89, 182, 0.5)',
+  line: { color: '#8e44ad', width: 1.5 },
+  
+  // B. El Box Plot (Caixa integrat a l'interior/eix)
+  box: {
+    visible: true,
+    width: 0.2,
+    fillcolor: '#ffffff',
+    line: { color: '#2c3e50', width: 1.5 }
+  },
+  
+  // C. La Pluja (Punts individuals amb jitter)
+  points: 'all',
+  jitter: 0.35,
+  pointpos: -0.5, // Col·loca la "pluja" al costat oposat del núvol
+  marker: {
+    color: '#8e44ad',
+    opacity: 0.6,
+    size: 5
+  }
+}];
+
+// 3. Disseny del gràfic
+const layout = {
+  yaxis: {
+    title: "Temps de resposta (ms)",
+    zeroline: false
+  },
+  margin: { l: 60, r: 30, t: 30, b: 40 },
+  showlegend: false
+};
+
+// 4. Renderitzar el gràfic
+Plotly.newPlot('raincloudChart', data, layout);
+</script>
+</body>
+</html>
